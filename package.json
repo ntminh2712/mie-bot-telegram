@@ -13,7 +13,7 @@
     "axis": "^1.0.0",
     "body-parser": "^1.15.1",
     "date-and-time": "^0.9.0",
-    "express": "~3.2.4",
+    "express": "~3.11.0",
     "moment": "^2.24.0",
     "morgan": "^1.7.0",
     "request": "^2.72.0"
