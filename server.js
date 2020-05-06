@@ -44,18 +44,10 @@ app.post('/', function(req, res) {
   //     }
   //   }
   // }
-  sendMessage(992734014, req)
-
-
-  
+  sendMessage(992734014, req.body.post)
 
   res.status(200).send("OK");
 });
-
-app.get('/testSendMessage', function(req,res) {
-    sendMessage(992734014, "maays thawngf mawjt lonf")
-})
-
 
 function sendMessage(id, messsage){
   var response = axios.get(url + "/sendMessage?chat_id=" + id + "&text=" + messsage);
