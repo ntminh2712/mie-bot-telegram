@@ -31,7 +31,7 @@ app.get('/setWebhook', (req, res) => {
 });
 
 
-app.post('/', function(req, res) {
+app.get('/', function(req, res) {
   var entries = req.body;
   send(entries)
   // for (var entry of entries) {
