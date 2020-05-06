@@ -30,7 +30,7 @@ app.get('/setWebhook', (req, res) => {
 
 app.post('/', function(req, res) {
   var entries = req.body;
-  send(entries)
+  // send(entries)
   // for (var entry of entries) {
   //   var messaging = entry.messaging;
   //   for (var message of messaging) {
@@ -44,11 +44,18 @@ app.post('/', function(req, res) {
   //     }
   //   }
   // }
+  sendMessage(992734014, "hahahaah")
+
+
   sendMessage(992734014, req.body + "----------\n" + req.body.entries)
   
 
   res.status(200).send("OK");
 });
+
+app.get('/testSendMessage', function(req,res) {
+    sendMessage(992734014, "maays thawngf mawjt lonf")
+})
 
 
 function sendMessage(id, messsage){
