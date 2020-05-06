@@ -5,6 +5,7 @@ var http = require('http');
 var bodyParser = require('body-parser');
 var express = require('express');
 var request = require('request');
+var axios = require('axios');
 var router = express();
 
 var app = express();
@@ -13,61 +14,76 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
 var server = http.createServer(app);
 var token = "1248238099:AAExxw3u8HXo4rjhAk0ea3bbqq9PFEV5H50";
-var url = ""
-var webAppCallback = ""
+var url = "https://api.telegram.org/bot" + token;
+var webAppCallback = "https://mie-bot-telegram.herokuapp.com/";
 
 app.get('/', (req, res) => {
-  res.send("Home page. Server running okay.");
+  res.send("server running");
 });
 
-app.get('/webhook', function(req, res) {
-  if (req.query['hub.verify_token'] === 'MieBotVerify') {
-    res.send(req.query['hub.challenge']);
-  }
-  res.send('Error, wrong validation token');
+app.get('/setWebhook', (req, res) => {
+  var response = axios.get(url + "/setWebhook?url" + webAppCallback)
+  res.send(response);
 });
 
-app.ge
 
-app.post('/webhook', function(req, res) {
+app.post('/', function(req, res) {
   var entries = req.body.entry;
-  for (var entry of entries) {
-    var messaging = entry.messaging;
-    for (var message of messaging) {
-      var senderId = message.sender.id;
-      if (message.message) {
-        // If user send text
-        if (message.message.text) {
-          var text = message.message.text;
-          console.log(text); // In tin nhắn người dùng
-          sendMessage(senderId, "Mie bot đây: " + text);
-        }
-      }
-    }
-  }
+  send(entries)
+  // for (var entry of entries) {
+  //   var messaging = entry.messaging;
+  //   for (var message of messaging) {
+  //     var senderId = message.sender.id;
+  //     var name = message.name
+  //     if (message.message) {
+  //       // If user send text
+  //       if (message.message.text) {
+  //         handlerMessage(message.message.text, senderId,name)
+  //       }
+  //     }
+  //   }
+  // }
 
   res.status(200).send("OK");
 });
 
-function sendMessage(senderId, message) {
-  request({
-    url: 'https://graph.facebook.com/v2.6/me/messages',
-    qs: {
-      access_token: "EAAEiYFKlCKIBAFACXjgh1VZAbwa8zjFsdRqAQlTmPUBd6g4PmgPrELgYZCmS4SFe71gU2ipXXvOh628bVRZAT4LQmSN42X91iKy4REJcmdjZCtsBu7jkG1d6VPHRZB11Q9aRjPYqppscKXFAznnFSNuTYgMrS6pLMxycZBwjnfZCQZDZD",
-    },
-    method: 'POST',
-    json: {
-      recipient: {
-        id: senderId
-      },
-      message: {
-        text: message
-      },
-    }
-  });
+
+function sendMessage(id, messsage){
+  var response = axios.get(url + "/sendMessage?chat_id=" + id + "&text=" + messsage);
+  res.status(200).send("OK")
 }
+
+
+
+
+
+
+// app.post('/', function(req, res) {
+
+
+//   res.status(200).send("OK");
+// });
+
+// function sendMessage(senderId, message) {
+//   request({
+//     url: 'https://graph.facebook.com/v2.6/me/messages',
+//     qs: {
+//       access_token: "EAAEiYFKlCKIBAFACXjgh1VZAbwa8zjFsdRqAQlTmPUBd6g4PmgPrELgYZCmS4SFe71gU2ipXXvOh628bVRZAT4LQmSN42X91iKy4REJcmdjZCtsBu7jkG1d6VPHRZB11Q9aRjPYqppscKXFAznnFSNuTYgMrS6pLMxycZBwjnfZCQZDZD",
+//     },
+//     method: 'POST',
+//     json: {
+//       recipient: {
+//         id: senderId
+//       },
+//       message: {
+//         text: message
+//       },
+//     }
+//   });
+// }
 
 
 // app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
