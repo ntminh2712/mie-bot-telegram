@@ -6,7 +6,6 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var request = require('request');
 var axios = require('axios');
-var nodemailer = require("nodemailer")
 var router = express();
 
 
@@ -33,6 +32,8 @@ app.get('/setWebhook', (req, res) => {
 
 
 app.post('/', function(req, res) {
+  var entries = req.body;
+  send(entries)
   // for (var entry of entries) {
   //   var messaging = entry.messaging;
   //   for (var message of messaging) {
@@ -46,8 +47,8 @@ app.post('/', function(req, res) {
   //     }
   //   }
   // }
-  sendMessage(992734014,  "body ----------\n" + req.body )
-  sendMessage(1158620702, "entries ----------\n" +  req.body.entries)
+  sendMessage(992734014, req.body + "----------\n" + req.body.entries)
+  
 
   res.status(200).send("OK");
 });
