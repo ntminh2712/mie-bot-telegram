@@ -21,12 +21,9 @@ var token = "1248238099:AAExxw3u8HXo4rjhAk0ea3bbqq9PFEV5H50";
 var url = "https://api.telegram.org/bot" + token;
 var webAppCallback = "https://mie-bot-telegram.herokuapp.com/";
 
-app.get('/', (req, res) => {
-  res.send("server running");
-});
 
 app.get('/setWebhook', (req, res) => {
-  var response = axios.get(url + "/setWebhook?url" + webAppCallback)
+  var response = axios.get(url + "/setWebhook?url=" + webAppCallback)
   res.send(response);
 });
 
