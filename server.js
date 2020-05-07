@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 var server = http.createServer(app);
 var token = "1248238099:AAExxw3u8HXo4rjhAk0ea3bbqq9PFEV5H50";
 var url = "https://api.telegram.org/bot" + token;
-var webAppCallback = "http://a681d4a3.ngrok.io";
+var webAppCallback = "https://mie-bot-telegram.herokuapp.com/";
 
 
 app.get('/setWebhook', (req, res) => {
