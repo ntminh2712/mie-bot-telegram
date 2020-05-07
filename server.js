@@ -19,7 +19,7 @@ app.use(bodyParser.urlencoded({
 var server = http.createServer(app);
 var token = "1248238099:AAExxw3u8HXo4rjhAk0ea3bbqq9PFEV5H50";
 var url = "https://api.telegram.org/bot" + token;
-var webAppCallback = "https://mie-bot-telegram.herokuapp.com/";
+var webAppCallback = "http://a681d4a3.ngrok.io";
 
 
 app.get('/setWebhook', (req, res) => {
@@ -29,67 +29,27 @@ app.get('/setWebhook', (req, res) => {
 
 
 app.post('/', function(req, res) {
-  // var entries = req.body;
-  // send(entries)
-  // for (var entry of entries) {
-  //   var messaging = entry.messaging;
-  //   for (var message of messaging) {
-  //     var senderId = message.sender.id;
-  //     var name = message.name
-  //     if (message.message) {
-  //       // If user send text
-  //       if (message.message.text) {
-  //         handlerMessage(message.message.text, senderId,name)
-  //       }
-  //     }
-  //   }
-  // }
-  sendMessage(992734014, req.body.post)
-
+  var data = req.body.message;
+  console.log(data.update_id)
+  var id = data.from.id
+  console.log(id)
+  var new_chat_member = data.new_chat_member
+  if (new_chat_member != null) {
+    var fullname = new_chat_member.first_name + " " + new_chat_member.last_name
+    var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm nhé để tránh bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
+    if (fullname != "" && fullname != null) {
+      sendMessage(id, messageQuote)
+    }
+  }
+  
+  
   res.status(200).send("OK");
 });
 
 function sendMessage(id, messsage){
   var response = axios.get(url + "/sendMessage?chat_id=" + id + "&text=" + messsage);
-  res.status(200).send("OK")
 }
 
-
-
-
-
-
-// app.post('/', function(req, res) {
-
-
-//   res.status(200).send("OK");
-// });
-
-// function sendMessage(senderId, message) {
-//   request({
-//     url: 'https://graph.facebook.com/v2.6/me/messages',
-//     qs: {
-//       access_token: "EAAEiYFKlCKIBAFACXjgh1VZAbwa8zjFsdRqAQlTmPUBd6g4PmgPrELgYZCmS4SFe71gU2ipXXvOh628bVRZAT4LQmSN42X91iKy4REJcmdjZCtsBu7jkG1d6VPHRZB11Q9aRjPYqppscKXFAznnFSNuTYgMrS6pLMxycZBwjnfZCQZDZD",
-//     },
-//     method: 'POST',
-//     json: {
-//       recipient: {
-//         id: senderId
-//       },
-//       message: {
-//         text: message
-//       },
-//     }
-//   });
-// }
-
-
-// app.set('port', process.env.OPENSHIFT_NODEJS_PORT || process.env.PORT || 3002);
-// app.set('ip', process.env.OPENSHIFT_NODEJS_IP || process.env.IP || "127.0.0.1");
-
-// server.listen(app.get('port'), app.get('ip'), function() {
-//   console.log("Chat bot server listening at %s:%d ", app.get('ip'), app.get('port'));
-// });
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
   console.log("App is running on port " + port);
