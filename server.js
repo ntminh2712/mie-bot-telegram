@@ -30,14 +30,18 @@ app.get('/setWebhook', (req, res) => {
 
 app.post('/', function(req, res) {
   var data = req.body.message;
+  if (data == null) {
+    console.log(data.update_id)
+    res.status(200).send("OK");
+  }
   console.log(data.update_id)
-  var id = data.from.id
+  var id = data.chat.id
   console.log(id)
   var new_chat_member = data.new_chat_member
   if (new_chat_member != null) {
     var fullname = new_chat_member.first_name + " " + new_chat_member.last_name
-    var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm nhé để tránh bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
-    if (fullname != "" && fullname != null) {
+    var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm để tránh vi phạm bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
+    if (fullname != null) {
       sendMessage(id, messageQuote)
     }
   }
@@ -47,8 +51,14 @@ app.post('/', function(req, res) {
 });
 
 function sendMessage(id, messsage){
-  var response = axios.get(url + "/sendMessage?chat_id=" + id + "&text=" + messsage);
+  var response = axios.get(url + "/sendMessage?chat_id=" + id + "&text=" + encodeURIComponent(messsage));
+  console.log(response)
 }
+
+app.get('/sendMessage', function(req, res) {
+  var response = axios.get(url + "/sendMessage?chat_id=" + id + "&text=" + messsage);
+
+})
 
 const port = process.env.PORT || 8000;
 server.listen(port, () => {
