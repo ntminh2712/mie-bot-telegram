@@ -9,7 +9,7 @@
     "start": "node server.js"
   },
   "dependencies": {
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "axis": "^1.0.0",
     "body-parser": "^1.15.1",
     "date-and-time": "^0.9.0",
