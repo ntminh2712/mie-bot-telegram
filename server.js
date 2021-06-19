@@ -29,25 +29,25 @@ app.get('/setWebhook', (req, res) => {
 
 
 app.post('/', function(req, res) {
-  var data = req.body.message;
-  if (data == null) {
-    console.log(data.update_id)
-    console.log("ready");
-    res.status(200).send("OK");
-  }
-  console.log(data.update_id)
-  var id = data.chat.id
-  console.log(id)
-  var new_chat_member = data.new_chat_member
-  var message_id = data.message_id
-  if (new_chat_member != null) {
-    var fullname = new_chat_member.first_name + " " + new_chat_member.last_name
-    var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm để tránh vi phạm bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
-    if (fullname != null) {
-      // sendMessage(id, messageQuote)
-      removeMessageAddmember(id,message_id)
-    }
-  }
+  // var data = req.body.message;
+  // if (data == null) {
+  //   console.log(data.update_id)
+  //   console.log("ready");
+  //   res.status(200).send("OK");
+  // }
+  // console.log(data.update_id)
+  // var id = data.chat.id
+  // console.log(id)
+  // var new_chat_member = data.new_chat_member
+  // var message_id = data.message_id
+  // if (new_chat_member != null) {
+  //   var fullname = new_chat_member.first_name + " " + new_chat_member.last_name
+  //   var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm để tránh vi phạm bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
+  //   if (fullname != null) {
+  //     // sendMessage(id, messageQuote)
+  //     removeMessageAddmember(id,message_id)
+  //   }
+  // }
   
   
   res.status(200).send("OK");
