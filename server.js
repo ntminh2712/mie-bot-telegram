@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 var server = http.createServer(app);
-var token = "1248238099:AAExxw3u8HXo4rjhAk0ea3bbqq9PFEV5H50";
+var token = "1604263290:AAG0mF252-Bqp0dEdDzuQ2DoS8at4cuRrMI";
 var url = "https://api.telegram.org/bot" + token;
 var webAppCallback = "https://mie-bot-telegram.herokuapp.com/";
 
