@@ -1,12 +1,22 @@
 // # SimpleServer
 // A simple chat bot server
 var logger = require('morgan');
+var http = require('http');
+var bodyParser = require('body-parser');
 var express = require('express');
+var request = require('request');
 var axios = require('axios');
+var router = express();
 
 
 var app = express();
 app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
+
+var server = http.createServer(app);
 var token = "1604263290:AAG0mF252-Bqp0dEdDzuQ2DoS8at4cuRrMI";
 var url = "https://api.telegram.org/bot" + token;
 var webAppCallback = "https://nongtraibot.herokuapp.com/";
@@ -59,7 +69,7 @@ app.get('/sendMessage', function(req, res) {
 })
 
 const port = process.env.PORT || 8000;
-app.listen(port, () => {
+server.listen(port, () => {
   console.log("App is running on port " + port);
 });
 // var port_number = server.listen(process.env.PORT || 3000);
