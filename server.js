@@ -29,32 +29,29 @@ app.get('/setWebhook', (req, res) => {
 
 
 app.post('/', function(req, res) {
-  console.log("===========")
-  console.log(req)
-  console.log("===========")
-  console.log(req.body)
-  console.log("===========")
   var data = req.body.message;
   if (data == null) {
-    console.log("null")
-    console.log("ready");
+    console.log("data nulll");
     res.status(200).send("OK");
   }
-  console.log("===========")
-  console.log(data)
-  // console.log(data.update_id)
-  // var id = data.chat.id
-  // console.log(id)
-  // var new_chat_member = data.new_chat_member
-  // var message_id = data.message_id
-  // if (new_chat_member != null) {
-  //   var fullname = new_chat_member.first_name + " " + new_chat_member.last_name
-  //   var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm để tránh vi phạm bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
-  //   if (fullname != null) {
-  //     // sendMessage(id, messageQuote)
-  //     removeMessageAddmember(id,message_id)
-  //   }
-  // }
+
+  var message_id = data.message_id
+  var id = data.chat.id
+
+  var new_chat_member = data.new_chat_member
+
+
+  if (new_chat_member != null) {
+    removeMessageAddmember(id,message_id)
+  }
+  
+  if (new_chat_member != null) {
+    var fullname = new_chat_member.first_name + " " + new_chat_member.last_name
+    var messageQuote = "Xin chào, " + fullname + " vui lòng đọc nội quy trong phần description của nhóm để tránh vi phạm bị ban khỏi nhóm nhé. \n Xin Cảm ơn!"
+    if (fullname != null) {
+      // sendMessage(id, messageQuote)
+    }
+  }
   
   
   res.status(200).send("OK");
@@ -67,6 +64,7 @@ function sendMessage(id, messsage){
 
 function removeMessageAddmember(chat_id, messsage_id) {
   var response = axios.get(url + "/deleteMessage?chat_id=" + chat_id + "&messsage_id=" + messsage_id);
+  console.log("=================================================deleteResponse================================================================")
   console.log(response)
 }
 
