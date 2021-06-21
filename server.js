@@ -11,11 +11,6 @@ var router = express();
 
 var app = express();
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
-
 var server = http.createServer(app);
 var token = "1604263290:AAG0mF252-Bqp0dEdDzuQ2DoS8at4cuRrMI";
 var url = "https://api.telegram.org/bot" + token;
@@ -69,8 +64,8 @@ app.get('/sendMessage', function(req, res) {
 })
 
 const port = process.env.PORT || 8000;
-server.listen(port, () => {
-  console.log("App is running on port " + port);
-});
-// var port_number = server.listen(process.env.PORT || 3000);
-// app.listen(port_number); 
+// server.listen(port, () => {
+//   console.log("App is running on port " + port);
+// });
+var port_number = server.listen(process.env.PORT || 3000);
+app.listen(port_number); 
